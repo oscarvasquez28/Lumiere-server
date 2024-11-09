@@ -44,10 +44,10 @@ export const login = (userData, callback) => {
     });
 };
 
-export const getUser = (userData, callback) => {
+export const getUser = (userId, callback) => {
     const sql = 'SELECT * FROM users WHERE id = ?';
     //db.query(sql, [userData.email, userData.password], callback);
-    db.query(sql, [id], (error, results) => {
+    db.query(sql, [userId], (error, results) => {
         if (error) return callback(error);
 
         if (results.length > 0) {
@@ -56,9 +56,17 @@ export const getUser = (userData, callback) => {
                     user.profile_picture = user.profile_picture.toString('base64');
                 }
                 user.status = user.status ? 1 : 0;
-                callback(null, { status: 'success', message: 'Login exitoso', user });
+                callback(null, { status: 'success', message: 'Usuario obtenido con éxito', user });
         } else {
-            callback(null, { status: 'error', message: 'Usuario o contraseña incorrectos' });
+            callback(null, { status: 'error', message: 'Error al obtener el usuario' });
         }
     });
 };
+
+export const updateUser = (userData, callback) => {
+    // Decodificar la imagen desde Base64 a binario
+    const base64Image = postData.image.replace(/^data:image\/\w+;base64,/, "");
+    const imageBuffer = Buffer.from(base64Image, 'base64');
+    const sql = 'UPDATE users SET first_name = ?, last_name = ?, username = ?, password = ?, profile_picture = ? WHERE id = ?';
+    db.query(sql, [userData.first_name, userData.last_name, userData.username, userData.password, imageBuffer,userData.id], callback);
+}
