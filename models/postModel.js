@@ -23,7 +23,8 @@ export const getPosts = (callback) => {
 export const createPost = (postData, callback) => {
 
     // Decodificar la imagen desde Base64 a binario
-    const imageBuffer = Buffer.from(postData.image, 'base64');
+    const base64Image = postData.image.replace(/^data:image\/\w+;base64,/, "");
+    const imageBuffer = Buffer.from(base64Image, 'base64');
 
     const sql = 'INSERT INTO posts (title, user_id, category_id, image) VALUES (?, ?, ?, ?)';
     db.query(sql, [postData.title, postData.user_id, postData.category_id, imageBuffer], callback);
