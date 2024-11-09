@@ -8,4 +8,7 @@ router.post('/', userController.createUser);
 router.put('/', (req, res) => res.send('actualizando usuarios'));
 router.delete('/', (req, res) => res.send('eliminando usuarios'));
 
+router.get('/user', userController.getUser);
+router.post('/login', userController.login);
+
 export default router;
