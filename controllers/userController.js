@@ -29,7 +29,7 @@ export const login = (req, res) => {
 };
 
 export const getUser = (req, res) => {
-    userModel.getUser(req.body, (err, result) => {
+    userModel.getUser(req.params.userId, (err, result) => {
         if (err) {
             return res.json({ Message: "Error inside server" });
         }
@@ -37,3 +37,11 @@ export const getUser = (req, res) => {
     });
 };
 
+export const updateUser = (req, res) => {
+    userModel.updateUser(req.body, (err, result) => {
+        if (err) {
+            return res.json({ Message: "Error inside server" });
+        }
+        return res.json(result);
+    });
+}

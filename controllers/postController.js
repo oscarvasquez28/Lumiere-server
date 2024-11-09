@@ -18,3 +18,21 @@ export const createPost = (req, res) => {
         return res.status(201).json({ Message: "Post created successfully", postId: result.insertId });
     });
 };
+
+export const getPostByUserId = (req, res) => {
+    postModel.getPostByUserId(req.params.userId, (err, result) => {
+        if (err) {
+            return res.json({ Message: "Error inside server" });
+        }
+        return res.json(result);
+    });
+}
+
+export const updatePostStatus = (req, res) => {
+    postModel.updatePostStatus(req.body, (err, result) => {
+        if (err) {
+            return res.json({ Message: "Error inside server" });
+        }
+        return res.json(result);
+    });
+}
