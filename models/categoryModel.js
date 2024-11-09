@@ -1,7 +1,7 @@
 import db from '../config/db.js';
 
 export const getCategories = (callback) => {
-    db.query('SELECT * FROM categories', callback);
+    db.query('SELECT * FROM categories ORDER BY id ASC', callback);
 };
 
 // export const createCategory = (categoryData, callback) => {

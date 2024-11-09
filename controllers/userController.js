@@ -18,3 +18,22 @@ export const createUser = (req, res) => {
         return res.status(201).json({ Message: "User created successfully", userId: result.insertId });
     });
 };
+
+export const login = (req, res) => {
+    userModel.login(req.body, (err, result) => {
+        if (err) {
+            return res.json({ Message: "Error inside server" });
+        }
+        return res.json(result);
+    });
+};
+
+export const getUser = (req, res) => {
+    userModel.getUser(req.body, (err, result) => {
+        if (err) {
+            return res.json({ Message: "Error inside server" });
+        }
+        return res.json(result);
+    });
+};
+
