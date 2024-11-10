@@ -2,7 +2,7 @@ import db from '../config/db.js';
 
 
 export const getPosts = (callback) => {
-    const sql = 'SELECT * FROM posts';
+    const sql = 'SELECT posts.*, users.username FROM posts JOIN users ON posts.user_id = users.id';
     db.query(sql, (error, results) => {
         if (error) return callback(error);
 
@@ -26,12 +26,12 @@ export const createPost = (postData, callback) => {
     const base64Image = postData.image.replace(/^data:image\/\w+;base64,/, "");
     const imageBuffer = Buffer.from(base64Image, 'base64');
 
-    const sql = 'INSERT INTO posts (title, user_id, category_id, image) VALUES (?, ?, ?, ?)';
-    db.query(sql, [postData.title, postData.user_id, postData.category_id, imageBuffer], callback);
+    const sql = 'INSERT INTO posts (title, user_id, category_id, image, status) VALUES (?, ?, ?, ?, ?)';
+    db.query(sql, [postData.title, postData.user_id, postData.category_id, imageBuffer, postData.status], callback);
 };
 
 export const getPostByUserId = (userId, callback) => {
-    const sql = 'SELECT * FROM posts WHERE user_id = ?';
+    const sql = 'SELECT posts.*, users.username FROM posts JOIN users ON posts.user_id = users.id WHERE user_id = ?';
     db.query(sql, [userId], (error, results) => {
         if (error) return callback(error);
 
