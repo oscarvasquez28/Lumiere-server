@@ -36,3 +36,12 @@ export const updatePostStatus = (req, res) => {
         return res.json(result);
     });
 }
+
+export const AdvancedSearch = (req, res) => {
+    postModel.AdvancedSearch(req.body, (err, result) => {
+        if (err) {
+            return res.json({ Message: "Error inside server" });
+        }
+        return res.json(result);
+    });
+}
