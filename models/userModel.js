@@ -65,7 +65,8 @@ export const getUser = (userId, callback) => {
 
 export const updateUser = (userData, callback) => {
     // Decodificar la imagen desde Base64 a binario
-    const base64Image = postData.image.replace(/^data:image\/\w+;base64,/, "");
+    console.log("updating: " + userData.username)
+    const base64Image = userData.profile_picture.replace(/^data:image\/\w+;base64,/, "");
     const imageBuffer = Buffer.from(base64Image, 'base64');
     const sql = 'UPDATE users SET first_name = ?, last_name = ?, username = ?, password = ?, profile_picture = ? WHERE id = ?';
     db.query(sql, [userData.first_name, userData.last_name, userData.username, userData.password, imageBuffer,userData.id], callback);
