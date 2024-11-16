@@ -42,9 +42,9 @@ export const getPostByUserId = (userId, callback) => {
                     post.image = post.image.toString('base64');
                 }
             });
-            callback(null, results);
+            callback(null, { status: 'success', list: results });
         } else {
-            callback(new Error("No se encontraron posts"));
+            callback(null, { status: 'error', message: 'No se encontraron posts.' });
         }
     });
 };
