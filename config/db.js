@@ -1,26 +1,26 @@
 import mysql from 'mysql';
-import { config } from 'dotenv';
+import { DB_HOST, DB_USER, DB_PASSWORD, DB_DATABASE } from './config.js';
 
-// Cargar variables de entorno (si usas .env local)
-config();
+// Log de las variables de entorno (para depuración)
+console.log('DB_HOST:', DB_HOST);
+console.log('DB_USER:', DB_USER);
+console.log('DB_PASSWORD:', DB_PASSWORD);
+console.log('DB_DATABASE:', DB_DATABASE);
 
-// Obtener la URL pública de MySQL desde las variables de entorno
-const mysqlUrl = process.env.MYSQL_PUBLIC_URL;
+// Singleton pattern
+const db = mysql.createConnection({
+    host: DB_HOST,
+    user: DB_USER,
+    password: DB_PASSWORD,
+    database: DB_DATABASE
+});
 
-if (!mysqlUrl) {
-  console.error('MYSQL_PUBLIC_URL no está definida. Verifica tu configuración.');
-  process.exit(1);
-}
-
-// Crear la conexión utilizando la URL
-const db = mysql.createConnection(mysqlUrl);
-
-db.connect((err) => {
-  if (err) {
-    console.error('Error connecting to the database:', err.stack);
-    return;
-  }
-  console.log('Database connected');
+db.connect(err => {
+    if (err) {
+        console.error('Error connecting to the database:', err);
+        return;
+    }
+    console.log('Database connected');
 });
 
 export default db;
