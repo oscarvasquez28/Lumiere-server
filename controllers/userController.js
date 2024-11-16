@@ -1,47 +1,27 @@
-import * as userModel from '../models/userModel.js';
+// controllers/userController.js
+import { userServiceFactory } from '../services/userServiceFactory.js';
 
 export const getUsers = (req, res) => {
-    userModel.getUsers((err, result) => {
-        if (err) {
-            return res.json({ Message: "Error inside server" });
-        }
-        return res.json(result);
-    });
+    const service = userServiceFactory('get'); // Acción: obtener todos los usuarios
+    service.handleRequest(req, res);
 };
 
 export const createUser = (req, res) => {
-    userModel.createUser(req.body, (err, result) => {
-        if (err) {
-            console.error(err);
-            return res.status(500).json({ Message: "Error inserting user" });
-        }
-        return res.status(201).json({ Message: "User created successfully", userId: result.insertId });
-    });
+    const service = userServiceFactory('create'); // Acción: crear un usuario
+    service.handleRequest(req, res);
 };
 
 export const login = (req, res) => {
-    userModel.login(req.body, (err, result) => {
-        if (err) {
-            return res.json({ Message: "Error inside server" });
-        }
-        return res.json(result);
-    });
+    const service = userServiceFactory('login'); // Acción: login
+    service.handleRequest(req, res);
 };
 
 export const getUser = (req, res) => {
-    userModel.getUser(req.params.userId, (err, result) => {
-        if (err) {
-            return res.json({ Message: "Error inside server" });
-        }
-        return res.json(result);
-    });
+    const service = userServiceFactory('getOne'); // Acción: obtener un usuario por ID
+    service.handleRequest(req, res);
 };
 
 export const updateUser = (req, res) => {
-    userModel.updateUser(req.body, (err, result) => {
-        if (err) {
-            return res.json({ Message: "Error inside server" });
-        }
-        return res.json(result);
-    });
-}
+    const service = userServiceFactory('update'); // Acción: actualizar un usuario
+    service.handleRequest(req, res);
+};
