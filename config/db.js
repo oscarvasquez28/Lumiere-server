@@ -6,7 +6,7 @@ import {
     DB_PASSWORD,
     DB_DATABASE
 } from './config.js';
-
+// Singleton pattern
 const db = mysql.createConnection({
     host: DB_HOST,
     user: DB_USER,
