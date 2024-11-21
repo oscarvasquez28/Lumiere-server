@@ -4,7 +4,7 @@ import * as userController from '../controllers/userController.js';
 const router = express.Router();
 
 //    /api/users
-
+// Router pattern
 router.get('/', userController.getUsers);
 router.post('/', userController.createUser);
 router.put('/', (req, res) => res.send('actualizando usuarios'));
