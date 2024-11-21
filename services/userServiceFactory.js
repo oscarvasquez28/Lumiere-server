@@ -29,6 +29,7 @@ class GetUsersService extends UserService {
     handleRequest(req, res) {
         userModel.getUsers((err, result) => {
             if (err) {
+                console.error(err);
                 return res.json({ Message: "Error inside server" });
             }
             return res.json(result);
