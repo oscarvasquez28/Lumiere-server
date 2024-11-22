@@ -11,5 +11,6 @@ router.post('/', postController.createPost);
 router.get('/post/:userId', postController.getPostByUserId);
 router.post('/updatePost', postController.updatePostStatus);
 router.post('/advancedSearch', postController.AdvancedSearch);
+router.post('/editPost', postController.updatePost);
 
 export default router;

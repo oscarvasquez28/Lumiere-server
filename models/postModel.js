@@ -80,3 +80,16 @@ export const AdvancedSearch = (postData, callback) => {
         }
     });
 };
+
+export const updatePost = (postData, callback) => {
+
+    // Decodificar la imagen desde Base64 a binario si existe
+    let imageBuffer = null;
+    if (postData.image) {
+        const base64Image = postData.image.replace(/^data:image\/\w+;base64,/, "");
+        imageBuffer = Buffer.from(base64Image, 'base64');
+    }
+
+    const sql = 'UPDATE posts SET title = ?, user_id = ?, category_id = ?, image = ?, status = ? WHERE id = ?';
+    db.query(sql, [postData.title, postData.user_id, postData.category_id, imageBuffer, postData.status, postData.id], callback);
+};

@@ -45,3 +45,12 @@ export const AdvancedSearch = (req, res) => {
         return res.json(result);
     });
 }
+
+export const updatePost = (req, res) => {
+    postModel.updatePost(req.body, (err, result) => {
+        if (err) {
+            return res.json({ Message: "Error inside server" });
+        }
+        return res.json(result);
+    });
+}
