@@ -47,6 +47,7 @@ export const AdvancedSearch = (req, res) => {
 }
 
 export const updatePost = (req, res) => {
+    console.log('Request Body:', req.body);
     postModel.updatePost(req.body, (err, result) => {
         if (err) {
             return res.json({ Message: "Error inside server" });
