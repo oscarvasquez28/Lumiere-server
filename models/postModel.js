@@ -36,9 +36,16 @@ export const getPosts = (callback) => {
                 }
             });
 
-            // Convertir las imágenes de cada post a base64
+            // Convertir las imágenes de cada post a base64 SOLO si son tipo Buffer
             postsWithImages.forEach(post => {
-                post.images = post.images.map(image => image.toString('base64'));
+                post.images = post.images.map(image => {
+                    // Si la imagen es un Buffer, la convertimos a base64
+                    if (Buffer.isBuffer(image)) {
+                        return image.toString('base64');
+                    }
+                    // Si no es un Buffer, solo devolvemos la imagen tal cual (puede ser URL o cadena de texto)
+                    return image;
+                });
             });
 
             callback(null, postsWithImages);
@@ -47,6 +54,7 @@ export const getPosts = (callback) => {
         }
     });
 };
+
 
 
 
@@ -117,9 +125,16 @@ export const getPostByUserId = (userId, callback) => {
                 }
             });
 
-            // Convertir las imágenes de cada post a base64
+            // Convertir las imágenes de cada post a base64 SOLO si son tipo Buffer
             postsWithImages.forEach(post => {
-                post.images = post.images.map(image => image.toString('base64'));
+                post.images = post.images.map(image => {
+                    // Si la imagen es un Buffer, la convertimos a base64
+                    if (Buffer.isBuffer(image)) {
+                        return image.toString('base64');
+                    }
+                    // Si no es un Buffer, solo devolvemos la imagen tal cual (puede ser URL o cadena de texto)
+                    return image;
+                });
             });
 
             callback(null, { status: 'success', list: postsWithImages });
@@ -128,6 +143,7 @@ export const getPostByUserId = (userId, callback) => {
         }
     });
 };
+
 
 
 export const updatePostStatus = (postData, callback) => {
