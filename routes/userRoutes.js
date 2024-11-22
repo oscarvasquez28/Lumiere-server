@@ -12,6 +12,6 @@ router.delete('/', (req, res) => res.send('eliminando usuarios'));
 
 router.get('/user/:userId', userController.getUser);
 router.post('/login', userController.login);
-router.post('/updateUser', userController.updateUser);
+router.put('/updateUser', userController.updateUser);
 
 export default router;
