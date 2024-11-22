@@ -52,6 +52,6 @@ export const updatePost = (req, res) => {
         if (err) {
             return res.json({ Message: "Error inside server" });
         }
-        return res.json(result);
+        return res.json({ status: 'success', message: 'Post updated successfully' });
     });
 }
