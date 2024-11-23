@@ -6,3 +6,7 @@ Features:
 MVC: Clear separation of responsibilities.
 Design Patterns: Adapter, Singleton, and Factory.
 Technologies: Node.js, Express, Kotlin (mobile app), and database (Mysql).
+
+## Feedback
+
+If you have any feedback, please reach out to us at oscar.vasquezot@uanl.edu.mx
