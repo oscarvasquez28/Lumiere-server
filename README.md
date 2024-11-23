@@ -9,4 +9,4 @@ Technologies: Node.js, Express, Kotlin (mobile app), and database (Mysql).
 
 ## Feedback
 
-If you have any feedback, please reach out to us at oscar.vasquezot@uanl.edu.mx
+If you have any feedback, please reach out to us at oscar.vasquezot@outlook.com
