@@ -154,7 +154,7 @@ export const updatePostStatus = (postData, callback) => {
 }
 
 export const AdvancedSearch = (postData, callback) => {
-    // Modificar la consulta para manejar la categoría opcional
+    // Modificar la consulta para manejar la categoría opcional y el título opcional
     const sql = `
         SELECT posts.id AS post_id, posts.title, posts.status, posts.created_at,
                users.username, users.id AS user_id, categories.name AS category_name,
@@ -163,17 +163,20 @@ export const AdvancedSearch = (postData, callback) => {
         JOIN users ON posts.user_id = users.id
         LEFT JOIN categories ON posts.category_id = categories.id
         LEFT JOIN post_images ON posts.id = post_images.post_id
-        WHERE posts.title LIKE ?
+        WHERE (posts.title LIKE ?)
         AND (posts.category_id = ? OR ? = 0)  -- Si la categoría es 0, no se filtra por categoría
         AND posts.status = 1
         ORDER BY posts.created_at DESC;
     `;
 
+    // Si no se pasa un título, filtramos por todos los posts
+    const titleParam = postData.title ? `%${postData.title}%` : '%';
+
     // Si category_id es undefined o 0, establecemos 0 para no filtrar por categoría
     const categoryParam = postData.category_id === undefined || postData.category_id === 0 ? 0 : postData.category_id;
 
-    // Ejecutar la consulta SQL con el parámetro de categoría
-    db.query(sql, [`%${postData.title}%`, categoryParam, categoryParam], (error, results) => {
+    // Ejecutar la consulta SQL con los parámetros de título y categoría
+    db.query(sql, [titleParam, categoryParam, categoryParam], (error, results) => {
         if (error) return callback(error);
 
         if (results.length > 0) {
@@ -214,6 +217,7 @@ export const AdvancedSearch = (postData, callback) => {
         }
     });
 };
+
 
 
 
