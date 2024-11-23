@@ -169,11 +169,11 @@ export const AdvancedSearch = (postData, callback) => {
         ORDER BY posts.created_at DESC;
     `;
 
-    // Si no se pasa un título, filtramos por todos los posts
-    const titleParam = postData.title ? `%${postData.title}%` : '%';
+    // Cambiar a `let` para permitir la reasignación
+    let titleParam = postData.title ? `%${postData.title}%` : '%';
 
-    // Si category_id es undefined o 0, establecemos 0 para no filtrar por categoría
-    const categoryParam = postData.category_id === undefined || postData.category_id === 0 ? 0 : postData.category_id;
+    // Cambiar a `let` para permitir la reasignación
+    let categoryParam = postData.category_id === undefined || postData.category_id === 0 ? 0 : postData.category_id;
 
     // Si solo se pasa category_id, pero no title, debemos buscar todos los posts de esa categoría
     if (!postData.title && postData.category_id) {
@@ -223,6 +223,7 @@ export const AdvancedSearch = (postData, callback) => {
         }
     });
 };
+
 
 
 
