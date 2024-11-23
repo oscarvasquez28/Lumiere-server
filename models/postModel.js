@@ -4,7 +4,7 @@ import db from '../config/db.js';
 export const getPosts = (callback) => {
     const sql = `
         SELECT posts.id AS post_id, posts.title, posts.status, posts.created_at,
-               users.username, categories.name AS category_name, post_images.image
+            users.id AS user_id, users.username, categories.name AS category_name, post_images.image
         FROM posts
         JOIN users ON posts.user_id = users.id
         JOIN categories ON posts.category_id = categories.id
@@ -29,6 +29,7 @@ export const getPosts = (callback) => {
                         title: post.title,
                         status: post.status,
                         created_at: post.created_at,
+                        user_id: post.user_id,
                         username: post.username,
                         category_name: post.category_name,
                         images: [post.image]  // Iniciar el array de imágenes con la primera imagen
@@ -92,7 +93,7 @@ export const createPost = (postData, callback) => {
 export const getPostByUserId = (userId, callback) => {
     const sql = `
         SELECT posts.id AS post_id, posts.title, posts.status, posts.created_at,
-               users.username, categories.name AS category_name, post_images.image
+               users.id AS user_id, users.username, categories.name AS category_name, post_images.image
         FROM posts
         JOIN users ON posts.user_id = users.id
         JOIN categories ON posts.category_id = categories.id
@@ -118,6 +119,7 @@ export const getPostByUserId = (userId, callback) => {
                         title: post.title,
                         status: post.status,
                         created_at: post.created_at,
+                        user_id: post.user_id,
                         username: post.username,
                         category_name: post.category_name,
                         images: [post.image]  // Iniciar el array de imágenes con la primera imagen
@@ -155,7 +157,7 @@ export const AdvancedSearch = (postData, callback) => {
     // Modificar la consulta para obtener todas las imágenes relacionadas con cada post
     const sql = `
         SELECT posts.id AS post_id, posts.title, posts.status, posts.created_at,
-            users.username, categories.name AS category_name,
+            users.id AS user_id, users.username, categories.name AS category_name,
             post_images.image
         FROM posts
         JOIN users ON posts.user_id = users.id
@@ -189,6 +191,7 @@ export const AdvancedSearch = (postData, callback) => {
                         title: post.title,
                         status: post.status,
                         created_at: post.created_at,
+                        user_id: post.user_id,
                         username: post.username,
                         category_name: post.category_name,
                         images: [post.image] // Crear un array de imágenes con la primera imagen
