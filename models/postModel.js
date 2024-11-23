@@ -154,22 +154,25 @@ export const updatePostStatus = (postData, callback) => {
 }
 
 export const AdvancedSearch = (postData, callback) => {
-    // Modificar la consulta para obtener todas las imágenes relacionadas con cada post
+    // Modificar la consulta para manejar la categoría opcional
     const sql = `
         SELECT posts.id AS post_id, posts.title, posts.status, posts.created_at,
-            users.id AS user_id, users.username, categories.name AS category_name,
-            post_images.image
+               users.id AS user_id, users.username, categories.name AS category_name,
+               post_images.image
         FROM posts
         JOIN users ON posts.user_id = users.id
-        JOIN categories ON posts.category_id = categories.id
+        LEFT JOIN categories ON posts.category_id = categories.id
         LEFT JOIN post_images ON posts.id = post_images.post_id
         WHERE posts.title LIKE ?
-        AND posts.category_id = ?
+        AND (posts.category_id = ? OR ? = 0)  -- Filtrar por categoría solo si no es 0
         AND posts.status = 1
         ORDER BY posts.created_at DESC;
     `;
 
-    db.query(sql, [`%${postData.title}%`, postData.category_id], (error, results) => {
+    // Modificar el parámetro de la categoría, si es 0 o no se proporciona, se omite el filtro
+    const categoryParam = postData.category_id === undefined ? 0 : postData.category_id;
+
+    db.query(sql, [`%${postData.title}%`, categoryParam, categoryParam], (error, results) => {
         if (error) return callback(error);
 
         if (results.length > 0) {
@@ -210,6 +213,7 @@ export const AdvancedSearch = (postData, callback) => {
         }
     });
 };
+
 
 
 export const updatePost = (postData, callback) => {
