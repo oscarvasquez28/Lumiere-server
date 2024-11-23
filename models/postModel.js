@@ -175,6 +175,12 @@ export const AdvancedSearch = (postData, callback) => {
     // Si category_id es undefined o 0, establecemos 0 para no filtrar por categoría
     const categoryParam = postData.category_id === undefined || postData.category_id === 0 ? 0 : postData.category_id;
 
+    // Si solo se pasa category_id, pero no title, debemos buscar todos los posts de esa categoría
+    if (!postData.title && postData.category_id) {
+        // En este caso, titleParam debe ser '%' para traer todos los posts de la categoría
+        titleParam = '%';
+    }
+
     // Ejecutar la consulta SQL con los parámetros de título y categoría
     db.query(sql, [titleParam, categoryParam, categoryParam], (error, results) => {
         if (error) return callback(error);
