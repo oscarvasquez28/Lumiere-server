@@ -9,7 +9,9 @@ import {PORT} from './config/config.js'
 
 const app = express();
 app.use(cors());
-app.use(express.json()); // Para poder leer JSON en el cuerpo de las peticiones
+//app.use(express.json()); // Para poder leer JSON en el cuerpo de las peticiones
+app.use(express.json({ limit: '10mb' }));  // 10 MB
+app.use(express.urlencoded({ limit: '10mb', extended: true }));
 
 app.use('/api/users', userRoutes);
 app.use('/api/posts', postRoutes);
