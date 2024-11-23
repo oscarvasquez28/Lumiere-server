@@ -4,7 +4,7 @@ import db from '../config/db.js';
 export const getPosts = (callback) => {
     const sql = `
         SELECT posts.id AS post_id, posts.title, posts.status, posts.created_at,
-            users.id AS user_id, users.username, categories.name AS category_name, post_images.image
+               users.username, users.id as user_id, categories.name AS category_name, post_images.image
         FROM posts
         JOIN users ON posts.user_id = users.id
         JOIN categories ON posts.category_id = categories.id
@@ -19,13 +19,13 @@ export const getPosts = (callback) => {
 
             // Agrupar imágenes por post
             results.forEach(post => {
-                let existingPost = postsWithImages.find(p => p.post_id === post.post_id);
+                let existingPost = postsWithImages.find(p => p.id === post.post_id);
 
                 if (existingPost) {
                     existingPost.images.push(post.image);
                 } else {
                     postsWithImages.push({
-                        post_id: post.post_id,
+                        id: post.post_id,
                         title: post.title,
                         status: post.status,
                         created_at: post.created_at,
@@ -93,7 +93,7 @@ export const createPost = (postData, callback) => {
 export const getPostByUserId = (userId, callback) => {
     const sql = `
         SELECT posts.id AS post_id, posts.title, posts.status, posts.created_at,
-               users.id AS user_id, users.username, categories.name AS category_name, post_images.image
+               users.username, users.id as user_id, categories.name AS category_name, post_images.image
         FROM posts
         JOIN users ON posts.user_id = users.id
         JOIN categories ON posts.category_id = categories.id
@@ -109,13 +109,13 @@ export const getPostByUserId = (userId, callback) => {
 
             // Agrupar imágenes por post
             results.forEach(post => {
-                let existingPost = postsWithImages.find(p => p.post_id === post.post_id);
+                let existingPost = postsWithImages.find(p => p.id === post.post_id);
 
                 if (existingPost) {
                     existingPost.images.push(post.image);
                 } else {
                     postsWithImages.push({
-                        post_id: post.post_id,
+                        id: post.post_id,
                         title: post.title,
                         status: post.status,
                         created_at: post.created_at,
@@ -157,7 +157,7 @@ export const AdvancedSearch = (postData, callback) => {
     // Modificar la consulta para obtener todas las imágenes relacionadas con cada post
     const sql = `
         SELECT posts.id AS post_id, posts.title, posts.status, posts.created_at,
-            users.id AS user_id, users.username, categories.name AS category_name,
+            users.username, users.id AS user_id, categories.name AS category_name,
             post_images.image
         FROM posts
         JOIN users ON posts.user_id = users.id
@@ -179,7 +179,7 @@ export const AdvancedSearch = (postData, callback) => {
             // Agrupar imágenes por post
             results.forEach(post => {
                 // Buscar si el post ya existe en el array
-                let existingPost = postsWithImages.find(p => p.post_id === post.post_id);
+                let existingPost = postsWithImages.find(p => p.id === post.post_id);
 
                 if (existingPost) {
                     // Si el post ya existe, agregar la imagen a su array de imágenes
@@ -187,7 +187,7 @@ export const AdvancedSearch = (postData, callback) => {
                 } else {
                     // Si el post no existe, crear una nueva entrada con la primera imagen
                     postsWithImages.push({
-                        post_id: post.post_id,
+                        id: post.post_id,
                         title: post.title,
                         status: post.status,
                         created_at: post.created_at,
